@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+                <%=link_to (image_tag "index/logo.png" ,width:160) ,dashboard_path%> 
+
+            <ul class="navlogo">
+                <li> <%=image_tag "index/notification.png" %></li>
+                <li><%=image_tag "index/inbox.png" %></li>
+                <li><%=image_tag "index/video.png" %></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="search-box">
+                <%=image_tag "index/search.png" %>
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="profile-image online" onclick="UserSettingToggle()">
+                <%=image_tag "index/profile-pic.png" %>
+            </div>
+
+        </div>
+        <div class="user-settings">
+            <div class="profile-darkButton">
+            <div class="user-profile">
+                <%=image_tag "index/profile-pic.png" %>
+                <div>
+                    <p> <%= current_user.name%></p>
+                <a><%= link_to "See Profile" , personalpage_path %> </a>            
+                </div>
+            </div>
+            <div id="dark-button" onclick="darkModeON()">
+                <span></span>
+            </div>
+            </div>
+            <hr>
+            <div class="user-profile">
+                <%=image_tag "index/feedback.png" %>
+                <div>
+                    <p> Give Feedback</p>
+                    <a href="#">Help us to improve</a>
+                </div>
+            </div>
+            <hr>
+            <div class="settings-links">
+                <%=image_tag "index/setting.png"%>
+                <a href="#">Settings & Privary <%=image_tag "index/arrow.png" %></a>
+            </div>
+
+            <div class="settings-links">
+                <%=image_tag "index/help.png"%>
+                <a href="#">Help & Support <%=image_tag "index/arrow.png" %></a>
+            </div>
+
+            <div class="settings-links">
+                <%=image_tag "index/display.png"%>
+                <a href="#">Display & Accessibility <%=image_tag "index/arrow.png" %></a>
+            </div>
+
+            <div class="settings-links">
+                <%=image_tag "index/logout.png"%>
+                <a><%= link_to "Log Out" , destroy_user_session_path, :method =>:delete %> </a>            
+                <a><%=image_tag "index/arrow.png" %></a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- content-area------------ -->
+
+    <div class="container">
+        <div class="left-sidebar">
+            <div class="important-links">
+                <a href="#"><%=image_tag "index/news.png" %>Latest News</a>
+                <a href="#"><%=image_tag "index/friends.png" %>Friends</a>
+                <a href="#"><%=image_tag "index/group.png" %>Groups</a>
+                <a href="#"><%=image_tag "index/marketplace.png" %>marketplace</a>
+                <a href="#"><%=image_tag "index/watch.png" %>Watch</a>
+                <a href="#">See More</a>
+            </div>
+
+            <div class="shortcut-links">
+                <p>Your Shortcuts</p>
+                <a href="#"> <%=image_tag "index/shortcut-1.png" %>Web Developers</a>
+                <a href="#"> <%=image_tag "index/shortcut-2.png" %>Web Design Course</a>
+                <a href="#"> <%=image_tag "index/shortcut-3.png" %>Full Stack Development</a>
+                <a href="#"> <%=image_tag "index/shortcut-4.png" %>Website Experts</a>
+            </div>
+        </div>
+
+        <!-- main-content------- -->
+
+        <div class="content-area">
+            <div class="story-gallery">
+                <div class="story story1">
+                    <%=image_tag "index/upload.png" %>
+                    <p>Post Story</p>
+                </div>
+                <div class="story story2">
+                    <%=image_tag "index/member-1.png" %>
+                    <p>LĐ</p>
+                </div>
+                <div class="story story3">
+                    <%=image_tag "index/member-2.png" %>
+                    <p>TĐ</p>
+                </div>
+                <div class="story story4">
+                    <%=image_tag "index/member-3.png" %>
+                    <p>Glenda</p>
+                </div>
+                <div class="story story5">
+                    <%=image_tag "index/member-4.png" %>
+                    <p>Pig</p>
+                </div>
+            </div>
+
+            <div class="write-post-container">
+                <div class="user-profile">
+                    <%=image_tag "index/profile-pic.png" %>
+                    <div>
+                        
+                        <p> <%= @user.name %></p>
+                        <small>Public <i class="fas fa-caret-down"></i></small>
+                    </div>
+                </div>
+
+                <div class="post-upload-textarea">
+                    <form action="/postcreate"> 
+                        <textarea name="post[content]" placeholder="What's on your mind?"  cols="30" rows="3"></textarea>
+                        <div class="add-post-links">
+                            <a href="#"><%=image_tag "index/live-video.png" %>Live Video</a>
+                            <a href="#"><%=image_tag "index/photo.png" %>Photo/Video</a>
+                            <a href="#"><%=image_tag "index/feeling.png" %>Feeling Activity</a>
+                            <a><input  id="submit" type="Submit"  value="Post Content " > </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <% @posts.each do |post| %>
+                <div class="status-field-container write-post-container">
+                    <div class="user-profile-box">
+                        <div class="user-profile">
+                            <%=image_tag "index/profile-pic.png" %>
+                            <div>
+                                <%@userpost = User.where(id: post.user_id)%>
+                                <%@userpost.each do |name|%> 
+                                    <p> <%=name.name%></p>
+                                <%end%>
+                                <small> <%=post.created_at%> </small>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="#"><i class="fas fa-ellipsis-v"></i></a>
+                        </div>
+                    </div>
+                    <div class="status-field">
+                        <p><%= post.content %></p>
+                    </div>
+                    <div class="post-reaction">
+                        <div class="activity-icons">
+                            <div><%=image_tag "index/like-blue.png" %>120</div>
+                            <div><%=image_tag "index/comments.png" %>52</div>
+                            <div><%=image_tag "index/delete.png" %> <%=link_to "Delete post", post_path(id: post.id) ,method: :delete%> </div>
+                        </div>
+                        <div class="post-profile-picture">
+                            <%=image_tag "index/profile-pic.png"%> <i class=" fas fa-caret-down"></i>
+                        </div>
+                    </div>
+
+                    <div class="body_comment">
+                        <div class="row">
+                            <div class="box_comment col-md-11">
+                            <form action="/commentcreate">
+                                <textarea name="comment[content]"  placeholder="Add a comment..."></textarea>
+                                <input type="hidden"  name="comment[post_id]" value= "<%=post.id%>">
+                                
+                                <div class="box_post">
+                                    <div class="pull-right">
+                                    <a><input  id="submit" type="Submit"  value="Post Content " > </a>
+                                    </div>
+                                </div>
+                            </form>
+
+                            
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div id="list_comment" class="col-md-12">
+                            <div class="box_result row">
+                                <div class="result_comment col-md-11">
+                                    <%@comments= Comment.where(post_id: post.id)%>
+                                    <%@comments.each do |comment|%> 
+                                        <% @usercomment = User.where(id: comment.user_id)%>
+                                        <% @usercomment.each do |user| %>
+                                            <h4> <%=user.name%> :</h4>
+                                        <% end %>
+
+                                        <p> <%=comment.content%></p>
+                                       
+                                    <div class="activity-icons">
+                                        <div><%=image_tag "index/like-blue.png" %>120</div>
+                                        <div><%=image_tag "index/delete.png" %> <%=link_to "Delete comment", comment_path(id: comment.id) ,method: :delete%> </div>
+                                    </div>
+
+                                    <%end%>
+                
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+           
+           
+        </div>
+
+        <!-- sidebar------------ -->
+        <div class="right-sidebar">
+            <div class="heading-link">
+                <h4>Events</h4>
+                <a href="">See All</a>
+            </div>
+
+            <div class="events">
+                <div class="left-event">
+                    <h4>13</h4>
+                    <span>august</span>
+                </div>
+                <div class="right-event">
+                    <h4>Social Media</h4>
+                    <p> <i class="fas fa-map-marker-alt"></i> wisdom em Park</p>
+                    <a href="#">More Info</a>
+                </div>
+            </div>
+            <div class="events">
+                <div class="left-event">
+                    <h4>18</h4>
+                    <span>January</span>
+                </div>
+                <div class="right-event">
+                    <h4>Mobile Marketing</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> wisdom em Park</p>
+                    <a href="#">More Info</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script >
+        var userSettings = document.querySelector(".user-settings");
+        var darkBtn = document.getElementById("dark-button");
+        var LoadMoreBackground =document.querySelector(".btn-LoadMore");
+        function UserSettingToggle(){
+            userSettings.classList.toggle("user-setting-showup-toggle");
+        }
+        
+
+        function darkModeON(){
+            darkBtn.classList.toggle("dark-mode-on");
+        document.body.classList.toggle("dark-theme");
+        };
+
+
+    
+    </script>
+</body>
+</html>

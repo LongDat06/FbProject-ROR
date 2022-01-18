@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<body>
+    <nav class="navbar">
+        <div class="nav-left">                
+        <%=link_to (image_tag "index/logo.png" ,width:160) ,dashboard_path%> 
+
+            <ul class="navlogo">
+                <li><%=image_tag "index/notification.png"%></li>
+                <li><%=image_tag "index/inbox.png"%></li>
+                <li><%=image_tag "index/video.png"%></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="search-box">
+                <%=image_tag "index/search.png" %>
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="profile-image online" onclick="UserSettingToggle()">
+                <%=image_tag "index/profile-pic.png"%>
+            </div>
+
+        </div>
+        <div class="user-settings">
+            <div class="profile-darkButton">
+                <div class="user-profile">
+                    <%=image_tag "index/profile-pic.png"%>
+                    <div>
+                        <p> <%= current_user.name%></p>
+                        <a href="#">See your profile</a>
+                    </div>
+                </div>
+                <div id="dark-button" onclick="darkModeON()">
+                    <span></span>
+                </div>
+            </div>
+            <hr>
+             <div class="user-profile">
+                <%=image_tag "index/feedback.png" %>
+                <div>
+                    <p> Give Feedback</p>
+                    <a href="#">Help us to improve</a>
+                </div>
+            </div>
+            <hr>
+            <div class="settings-links">
+                <%=image_tag "index/setting.png"%>
+                <a href="#">Settings & Privary <%=image_tag "index/arrow.png" %></a>
+            </div>
+
+            <div class="settings-links">
+                <%=image_tag "index/help.png"%>
+                <a href="#">Help & Support <%=image_tag "index/arrow.png" %></a>
+            </div>
+
+            <div class="settings-links">
+                <%=image_tag "index/display.png"%>
+                <a href="#">Display & Accessibility <%=image_tag "index/arrow.png" %></a>
+            </div>
+
+            <div class="settings-links">
+                <%=image_tag "index/logout.png"%>
+                <a><%= link_to "Log Out" , destroy_user_session_path, :method =>:delete %> </a>            
+                <a><%=image_tag "index/arrow.png" %></a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- profile-page-------------------------- -->
+
+
+    <div class="profile-container">
+        <div class="dashboard">
+            <div class="left-dashboard">
+                <div class="left-dashboard-info">
+                    <h3> <%= current_user.name%> </h3>
+                    <p>120 Friends - 20 mutuals</p>
+                    <div class="mutual-friend-images">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="right-dashboard-info">
+                <div class="right-dashboard-info-top">
+
+                    <button type="button"><i class="fas fa-user-plus"></i> Friends</button>
+                    <button type="button"><i class="far fa-envelope"></i> messages</button>
+                </div>
+                <div class="right-div-single-logo"> <a href="#"> <i class="fas fa-ellipsis-h"></i></a></div>
+            </div>
+        </div>
+
+
+        <div class="container content-profile-container">
+            <div class="left-sidebar profile-left-sidebar">
+                <div class="left-profile-sidebar-top">
+                    <div class="intro-bio">
+                        <h4>Infomation</h4>
+                        <p>Belive in yourself and you do unbelievable things <i class="far fa-smile-beam"></i></p>
+                        <hr>
+                    </div>
+                    <div class="background-details">
+                        <a href="#"><i class="fas fa-briefcase"></i>
+                            <p>Freelancer on Fiverr</p>
+                        </a>
+                        <a href="#"><i class="fas fa-graduation-cap"></i>
+                            <p>Studied bsc at Choumuhoni Collage</p>
+                        </a>
+                        <a href="#"><i class="fas fa-user-graduate"></i>
+                            <p>Went to Technical School & Collage</p>
+                        </a>
+                        <a href="#"><i class="fas fa-home"></i>
+                            <p>Lives in Noakhali, Chittagong</p>
+                        </a>
+                        <a href="#"><i class="fas fa-map-marker-alt"></i>
+                            <p>From Chittagong, Bangladesh</p>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="left-profile-sidebar-top gallery">
+                    <div class="heading-link profile-heading-link">
+                        <h4>Friends</h4>
+                        <a href="">All Friends</a>
+                    </div>
+
+                    <div class="gallery-photos">
+                        <div class="gallery-photos-rowFirst">
+                            <div class="first-friend">
+                                <%=image_tag "index/member-1.png"%>
+                                <p>Nathan M</p>
+                            </div>
+                            <div class="second-friend">
+                                <%=image_tag "index/member-2.png"%>
+                                <p>Joseph N</p>
+                            </div>
+                            <div class="third-friend">
+                                <%=image_tag "index/member-3.png"%>
+                                <p>Blondie K</p>
+                            </div>
+                            <div class="forth-friend">
+                                <%=image_tag "index/member-4.png"%>
+                                <p>Jonathon J</p>
+                            </div>
+                            <div class="fifth-friend">
+                                <%=image_tag "index/member-5.png"%>
+                                <p>Mark K</p>
+                            </div>
+                            <div class="sixth-friend">
+                                <%=image_tag "index/member-6.png"%>
+                                <p>Emilia M</p>
+                            </div>
+                            <div class="seventh-friend">
+                                <%=image_tag "index/member-7.png"%>
+                                <p>Max P</p>
+                            </div>
+                            <div class="eighth-friend">
+                                <%=image_tag "index/member-8.png"%>
+                                <p>Layla M</p>
+                            </div>
+                            <div class="ninth-friend">
+                                <%=image_tag "index/member-9.png"%>
+                                <p>Edward M</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- main-content------- -->
+
+            <div class="content-area profile-content-area">
+                <div class="write-post-container">
+                    <div class="user-profile">
+                        <%=image_tag "index/profile-pic.png" %>
+                        <div>
+                            <p> <%= current_user.name %></p>
+                            <small>Public <i class="fas fa-caret-down"></i></small>
+                        </div>
+                    </div>
+                    <div class="post-upload-textarea">
+                        <form action="/postcreate" > 
+                            <textarea name="post[content]" placeholder="What's on your mind?"  cols="30" rows="3"></textarea>
+
+                            <div class="add-post-links">
+                                <a href="#"><%=image_tag "index/live-video.png" %>Live Video</a>
+                                <a href="#"><%=image_tag "index/photo.png" %>Photo/Video</a>
+                                <a href="#"><%=image_tag "index/feeling.png" %>Feeling Activity</a>
+                                <a><input  id="submit" type="Submit"  value="Post Content " > </a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <% @posts.each do |post| %>
+                <div class="status-field-container write-post-container">
+                    <div class="user-profile-box">
+                        <div class="user-profile">
+                            <%=image_tag "index/profile-pic.png" %>
+                            <div>
+                                <p> <%=current_user.name%></p>
+                                <small> <%=post.created_at%> </small>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="#"><i class="fas fa-ellipsis-v"></i></a>
+                        </div>
+                    </div>
+                    <div class="status-field">
+                        <p><%= post.content %></p>
+                    </div>
+                    <div class="post-reaction">
+                        <div class="activity-icons">
+                            <div><%=image_tag "index/like-blue.png" %>120</div>
+                            <div><%=image_tag "index/comments.png" %>52</div>
+                            <div><%=image_tag "index/delete.png" %> <%=link_to "Delete post", post_path(id: post.id) ,method: :delete%> </div>
+                        </div>
+                            
+                    </div>
+                    
+                    <div class="body_comment">
+                        <div class="row">
+                            <div class="box_comment col-md-11">
+                            <form action="/commentcreate">
+                                <textarea name="comment[content]"  placeholder="Add a comment..."></textarea>
+                                <input type="hidden"  name="comment[post_id]" value= "<%=post.id%>">
+                                
+                                <div class="box_post">
+                                    <div class="pull-right">
+                                    <a><input  id="submit" type="Submit"  value="Post Content " > </a>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div id="list_comment" class="col-md-12">
+                            <div class="box_result row">
+                                <div class="result_comment col-md-11">
+                                
+                                    <%@comments= Comment.where(post_id: post.id)%>
+                                    <%@comments.each do |comment|%> 
+                                        <% @usercomment = User.where(id: comment.user_id)%>
+                                        <% @usercomment.each do |user| %>
+                                            <h4> <%=user.name%> :</h4>
+                                        <% end %>
+
+                                        <p> <%=comment.content%></p>
+                                       
+                                    <div class="activity-icons">
+                                        <div><%=image_tag "index/like-blue.png" %>120</div>
+                                        <div><%=image_tag "index/delete.png" %> <%=link_to "Delete comment", comment_path(id: comment.id) ,method: :delete%> </div>
+                                    </div>
+                                    <%end%>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+
+
+    <script >
+        var userSettings = document.querySelector(".user-settings");
+        var darkBtn = document.getElementById("dark-button");
+        var LoadMoreBackground =document.querySelector(".btn-LoadMore");
+        function UserSettingToggle(){
+            userSettings.classList.toggle("user-setting-showup-toggle");
+        }
+        
+
+        function darkModeON(){
+            darkBtn.classList.toggle("dark-mode-on");
+        document.body.classList.toggle("dark-theme");
+        };
+
+
+    
+    </script>
+    </body>
+
+</html>
