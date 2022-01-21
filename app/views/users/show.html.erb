@@ -251,7 +251,12 @@
                                         <p> <%=comment.content%></p>
                                        
                                     <div class="activity-icons">
-                                        <div><%=image_tag "index/like-blue.png" %>120</div>
+                                        <%@like= Likecomment.where(comment_id: comment.id)%>
+                                        <% if Likecomment.where(comment_id: comment.id,user_id: current_user.id).any? %>
+                                            <div><%=link_to (image_tag "index/unlike.png") ,likecomment_path(id: comment.id),method: :delete %> <%= @like.count%> </div>
+                                        <% else %>
+                                            <div><%=link_to (image_tag "index/like-blue.png") ,likecomments_path(id: comment.id),method: :post %> <%= @like.count%> </div>
+                                        <% end %>                                           
                                         <div><%=image_tag "index/delete.png" %> <%=link_to "Delete comment", comment_path(id: comment.id) ,method: :delete%> </div>
                                     </div>
                                     <%end%>
