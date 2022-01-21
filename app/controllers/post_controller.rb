@@ -16,8 +16,12 @@ class PostController < ApplicationController
     end
 
     def destroy
+
         @post = Post.find(params[:id])
-        @post.destroy
+        
+        if current_user.id == @post.user_id 
+            @post.destroy
+        end
         redirect_to dashboard_path
 
     end
