@@ -30,7 +30,7 @@
                     <%=image_tag "index/profile-pic.png"%>
                     <div>
                         <p> <%= current_user.name%></p>
-                        <a href="#">See your profile</a>
+                        <a><%= link_to "See Profile" , user_path(id: current_user.id) %> </a>    
                     </div>
                 </div>
                 <div id="dark-button" onclick="darkModeON()">
@@ -77,7 +77,7 @@
         <div class="dashboard">
             <div class="left-dashboard">
                 <div class="left-dashboard-info">
-                    <h3> <%= current_user.name%> </h3>
+                    <h3> <%= @user.name%> </h3>
                     <p>120 Friends - 20 mutuals</p>
                     <div class="mutual-friend-images">
                         
@@ -86,9 +86,20 @@
             </div>
             <div class="right-dashboard-info">
                 <div class="right-dashboard-info-top">
-
-                    <button type="button"><i class="fas fa-user-plus"></i> Friends</button>
+                <% @friend = Friendship.where(user_id: current_user.id, friend_id: @user.id) %>
+                <% if @friend.any? %>
+                    <button type="button"><i class="far fa-envelope"></i> <%=link_to "UnFriend" , friendship_path(id: @user.id), method: :delete%></button>
                     <button type="button"><i class="far fa-envelope"></i> messages</button>
+
+                <% elsif @user.id == current_user.id %>
+
+                <% else %>
+                    <form action="/addfriend">
+                        <button type="submit" name="friendship[friend_id]" value="<%= @user.id%>"  > Add Friend</button>
+                    </form>
+                    <button type="button"><i class="far fa-envelope"></i> messages</button>
+    
+                <%end%>
                 </div>
                 <div class="right-div-single-logo"> <a href="#"> <i class="fas fa-ellipsis-h"></i></a></div>
             </div>
@@ -119,7 +130,10 @@
                         <a href="#"><i class="fas fa-map-marker-alt"></i>
                             <p>From Chittagong, Bangladesh</p>
                         </a>
+
                     </div>
+                        <p style = "text-align: center"><%=link_to "Edit Info" , edit_user_registration_path(id: @user.id)%> <i class="far fa-smile-beam"></i></p>
+
                 </div>
 
                 <div class="left-profile-sidebar-top gallery">
@@ -130,42 +144,15 @@
 
                     <div class="gallery-photos">
                         <div class="gallery-photos-rowFirst">
+                            <% @listfriend = User.find( @user.friend_ids )%>
+                            <% @listfriend.each do |list| %>
                             <div class="first-friend">
                                 <%=image_tag "index/member-1.png"%>
-                                <p>Nathan M</p>
+                                
+                                <p><%=link_to list.name , user_path(id:list.id) %></p>
+                                
                             </div>
-                            <div class="second-friend">
-                                <%=image_tag "index/member-2.png"%>
-                                <p>Joseph N</p>
-                            </div>
-                            <div class="third-friend">
-                                <%=image_tag "index/member-3.png"%>
-                                <p>Blondie K</p>
-                            </div>
-                            <div class="forth-friend">
-                                <%=image_tag "index/member-4.png"%>
-                                <p>Jonathon J</p>
-                            </div>
-                            <div class="fifth-friend">
-                                <%=image_tag "index/member-5.png"%>
-                                <p>Mark K</p>
-                            </div>
-                            <div class="sixth-friend">
-                                <%=image_tag "index/member-6.png"%>
-                                <p>Emilia M</p>
-                            </div>
-                            <div class="seventh-friend">
-                                <%=image_tag "index/member-7.png"%>
-                                <p>Max P</p>
-                            </div>
-                            <div class="eighth-friend">
-                                <%=image_tag "index/member-8.png"%>
-                                <p>Layla M</p>
-                            </div>
-                            <div class="ninth-friend">
-                                <%=image_tag "index/member-9.png"%>
-                                <p>Edward M</p>
-                            </div>
+                            <%end%>
                         </div>
                     </div>
                 </div>
@@ -204,7 +191,7 @@
                         <div class="user-profile">
                             <%=image_tag "index/profile-pic.png" %>
                             <div>
-                                <p> <%=current_user.name%></p>
+                                <p> <%=@user.name%></p>
                                 <small> <%=post.created_at%> </small>
                             </div>
                         </div>
@@ -217,8 +204,16 @@
                     </div>
                     <div class="post-reaction">
                         <div class="activity-icons">
-                            <div><%=image_tag "index/like-blue.png" %>120</div>
-                            <div><%=image_tag "index/comments.png" %>52</div>
+                            <%@comment= Comment.where(post_id: post.id)%>
+                            <%@like= Likepost.where(post_id: post.id)%>
+        
+                            <% if Likepost.where(post_id: post.id,user_id: current_user.id).any? %>
+                                <div><%=link_to (image_tag "index/unlike.png") ,likepost_path(id: post.id),method: :delete %> <%= @like.count%> </div>
+                            <% else %>
+                                <div><%=link_to (image_tag "index/like-blue.png") ,likepost_index_path(id: post.id),method: :post %> <%= @like.count%> </div>
+                            <% end %>
+                            
+                            <div><%=image_tag "index/comments.png" %><%= @comment.count%></div>
                             <div><%=image_tag "index/delete.png" %> <%=link_to "Delete post", post_path(id: post.id) ,method: :delete%> </div>
                         </div>
                             
@@ -233,7 +228,7 @@
                                 
                                 <div class="box_post">
                                     <div class="pull-right">
-                                    <a><input  id="submit" type="Submit"  value="Post Content " > </a>
+                                    <a><input  id="submit" type="Submit"  value="Comment Content " > </a>
                                     </div>
                                 </div>
                             </form>
@@ -250,7 +245,7 @@
                                     <%@comments.each do |comment|%> 
                                         <% @usercomment = User.where(id: comment.user_id)%>
                                         <% @usercomment.each do |user| %>
-                                            <h4> <%=user.name%> :</h4>
+                                        <p> <%=link_to user.name, user_path(id: comment.user_id) %></p>
                                         <% end %>
 
                                         <p> <%=comment.content%></p>

@@ -6,9 +6,17 @@ Rails.application.routes.draw do
   get "/personalpage" ,to: "users#personalpage"
   get "/postcreate" ,to: "post#create"
   get "/commentcreate" ,to: "comments#create"
+  get "/addfriend" , to: "friendships#create"
 
 
   resources :comments
   resources :post
+  resources :users
+  resources :friendships
+  resources :likepost
+  resources :likecomments
+
+
+
   root to: "public#homepage"
 end
